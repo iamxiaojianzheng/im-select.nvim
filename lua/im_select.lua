@@ -41,7 +41,7 @@ local C = {
     default_command = { "im-select.exe" },
     -- default input method in normal mode.
     default_method_selected = "1033",
-    custom_method_selected = "2053",
+    custom_method_selected = nil,
 
     -- Restore the default input method state when the following events are triggered
     set_default_events = { "VimEnter", "FocusGained", "InsertLeave", "CmdlineLeave" },
@@ -196,7 +196,9 @@ local function restore_previous_im()
 end
 
 local function restore_custom_im()
-    change_im_select(C.default_command, C.custom_method_selected)
+    if C.custom_method_selected ~= nil then
+        change_im_select(C.default_command, C.custom_method_selected)
+    end
 end
 
 M.setup = function(opts)

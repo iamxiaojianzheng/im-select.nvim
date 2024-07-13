@@ -172,7 +172,7 @@ Options with its default values
             default_im_select  = "com.apple.keylayout.ABC",
 
             -- IM will be set to `custom_im_select` in `set_custom_events`
-            custom_im_select = "",
+            custom_im_select = nil,
 
             -- Can be binary's name, binary's full path, or a table, e.g. 'im-select',
             -- '/usr/local/bin/im-select' for binary without extra arguments,
