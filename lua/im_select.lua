@@ -41,9 +41,11 @@ local C = {
     default_command = { "im-select.exe" },
     -- default input method in normal mode.
     default_method_selected = "1033",
+    custom_method_selected = "2053",
 
     -- Restore the default input method state when the following events are triggered
     set_default_events = { "VimEnter", "FocusGained", "InsertLeave", "CmdlineLeave" },
+    set_custom_events = {},
     -- Restore the previous used input method state when the following events are triggered
     set_previous_events = { "InsertEnter" },
 
@@ -89,6 +91,10 @@ local function set_opts(opts)
         C.default_method_selected = opts.default_im_select
     end
 
+    if opts.custom_im_select ~= nil then
+        C.custom_method_selected = opts.custom_im_select
+    end
+
     if opts.default_command ~= nil then
         if type(opts.default_command) == "string" then
             C.default_command = { opts.default_command }
@@ -105,6 +111,10 @@ local function set_opts(opts)
 
     if opts.set_previous_events ~= nil and type(opts.set_previous_events) == "table" then
         C.set_previous_events = opts.set_previous_events
+    end
+
+    if opts.set_custom_events ~= nil and type(opts.set_custom_events) == "table" then
+        C.set_custom_events = opts.set_custom_events
     end
 
     -- deprecated
@@ -185,6 +195,10 @@ local function restore_previous_im()
     end
 end
 
+local function restore_custom_im()
+    change_im_select(C.default_command, C.custom_method_selected)
+end
+
 M.setup = function(opts)
     if not is_supported() then
         return
@@ -206,6 +220,13 @@ M.setup = function(opts)
     if #C.set_previous_events > 0 then
         vim.api.nvim_create_autocmd(C.set_previous_events, {
             callback = restore_previous_im,
+            group = group_id,
+        })
+    end
+
+    if #C.set_custom_events > 0 then
+        vim.api.nvim_create_autocmd(C.set_custom_events, {
+            callback = restore_custom_im,
             group = group_id,
         })
     end

@@ -171,6 +171,9 @@ Options with its default values
             -- You can use `im-select` or `fcitx5-remote -n` to get the IM's name
             default_im_select  = "com.apple.keylayout.ABC",
 
+            -- IM will be set to `custom_im_select` in `set_custom_events`
+            custom_im_select = "",
+
             -- Can be binary's name, binary's full path, or a table, e.g. 'im-select',
             -- '/usr/local/bin/im-select' for binary without extra arguments,
             -- or { "AIMSwitcher.exe", "--imm" } for binary need extra arguments to work.
@@ -181,6 +184,9 @@ Options with its default values
 
             -- Restore the default input method state when the following events are triggered
             set_default_events = { "VimEnter", "FocusGained", "InsertLeave", "CmdlineLeave" },
+
+            -- Restore the custom input method state when the following events are triggered
+            set_custom_events = {},
 
             -- Restore the previous used input method state when the following events
             -- are triggered, if you don't want to restore previous used im in Insert mode,
